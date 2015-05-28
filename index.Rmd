@@ -88,10 +88,15 @@ First lets install our package and make load the library. We can only begin to u
 
 ```{r}
 #install the package
-install.packages("RSQLite")
+usePackage <- function(p) {
+    if (!is.element(p, installed.packages()[,1]))
+        install.packages(p, dep = TRUE)
+    require(p, character.only = TRUE)
+}
+
 
 #load the package
-library(RSQLite)
+usePackage('RSQLite')
 ```
 
 One could also use the RStudio Gui to install this package:
@@ -288,6 +293,8 @@ Remember: Write programs for people not for computers!
 ```{r}
 
 
+usePackage('dplyr')
+
 portal_mammals <- src_sqlite( "data/portal_mammals.sqlite" )
 plots <- tbl(portal_mammals, "plots")
 
@@ -366,7 +373,7 @@ dbDisconnect(db)
 
 Functions work like functions in math: (from http://en.wikipedia.org/wiki/Function_(mathematics))
 
-![Function](img/function_machine.png)
+
 
 In R you have:
 
